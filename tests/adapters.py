@@ -7,7 +7,9 @@ import resiliparse
 from resiliparse.parse.encoding import detect_encoding
 from resiliparse.extract.html2text import extract_plain_text
 from cs336_data.language_identification import identify_language
-
+from cs336_data.mask_pii import mask_emails, mask_phone_numbers, mask_ipv4
+from cs336_data.harmful_content import nsfw_classifier, toxic_speech_nsfw_classifier
+from cs336_data.gopher_quality_filters import gopher_quality_filter
 
 def run_extract_text_from_html_bytes(html_bytes: bytes) -> str | None:
     try:
@@ -22,23 +24,23 @@ def run_identify_language(text: str) -> tuple[Any, float]:
 
 
 def run_mask_emails(text: str) -> tuple[str, int]:
-    raise NotImplementedError
+    return mask_emails(text)
 
 
 def run_mask_phone_numbers(text: str) -> tuple[str, int]:
-    raise NotImplementedError
+    return mask_phone_numbers(text)
 
 
 def run_mask_ips(text: str) -> tuple[str, int]:
-    raise NotImplementedError
+    return mask_ipv4(text)
 
 
 def run_classify_nsfw(text: str) -> tuple[Any, float]:
-    raise NotImplementedError
+    return nsfw_classifier(text)
 
 
 def run_classify_toxic_speech(text: str) -> tuple[Any, float]:
-    raise NotImplementedError
+    return toxic_speech_nsfw_classifier(text)
 
 
 def run_classify_quality(text: str) -> tuple[Any, float]:
@@ -46,7 +48,7 @@ def run_classify_quality(text: str) -> tuple[Any, float]:
 
 
 def run_gopher_quality_filter(text: str) -> bool:
-    raise NotImplementedError
+    return gopher_quality_filter(text)
 
 
 def run_exact_line_deduplication(
