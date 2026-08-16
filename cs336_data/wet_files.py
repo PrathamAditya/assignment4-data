@@ -28,7 +28,19 @@ class _EnglishWetFile(Furu[Path]):
         output_path = self.data_dir / "data.warc.wet.gz"
 
         self.logger.info("Loading English language identifier")
-        is_english: Callable[[str], bool] = "TODO"
+        self.logger.info("Loading English language identifier")
+        lid_model_path = get_shared_assets_path() / "classifiers" / "lid.176.bin"
+        _lid_model = fasttext.load_model(str(lid_model_path))
+
+        def is_english(text: str) -> bool:
+            # fastText's predict() fails on strings containing newlines, so collapse
+            # to a single line before scoring
+            clean_text = text.replace("\n", " ").strip()
+            if not clean_text:
+                return False
+            labels, probs = _lid_model.predict(clean_text, k=1)
+            return labels[0] == "__label__en" and probs[0] >= 0.7
+        # is_english: Callable[[str], bool] = "TODO"
         assert is_english != "TODO", "you need to implement is_english. we use probability >= 0.7 with https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin"
 
         total_text = 0
@@ -80,13 +92,14 @@ class _EnglishWetFile(Furu[Path]):
         return get_shared_assets_path() / "furu"
 
 
-@app.function(image=build_image(), volumes=VOLUME_MOUNTS, timeout=60 * 60 * 12, max_containers=128)
+@app.function(image=build_image(), volumes=VOLUME_MOUNTS, timeout=60 * 60 * 12, max_containers=32)
 def make_wet_file_on_modal(wet_file: _EnglishWetFile) -> Path:
     return wet_file.load_or_create()
 
 
 class EnglishWetFiles(Furu[list[Path]]):
-    n_files: int = 2500
+    # n_files: int = 2500
+    n_files: int =  2500
     group_size: int = 4
     shuffle_seed: int = 336
     crawl_id: str = "CC-MAIN-2026-17"

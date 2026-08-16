@@ -2,7 +2,8 @@ from pathlib import Path
 
 import modal
 
-MODAL_SHARED_PATH = Path("/shared-data")
+# MODAL_SHARED_PATH = Path("/shared-data")
+MODAL_SHARED_PATH = Path("/root/data")
 
 
 def get_shared_assets_path() -> Path:

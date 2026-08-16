@@ -116,9 +116,5 @@ def inspect_wrac_records():
             if i == 5:
                 break
 
-
-
 if __name__ == "__main__":
-    # inspect_wet_records()
-    # inspect_wrac_records()
     inspect_wrac_records()
