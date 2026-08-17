@@ -1,6 +1,7 @@
 from cs336_data.language_identification import identify_language
 from cs336_data.mask_pii import mask_emails, mask_phone_numbers
-from cs336_data.harmful_content import mask_nsfw, mask_toxic_speech
+from cs336_data.reservoir_sample_gz import reservoir_sample_gz, save_samples
+from cs336_data.multitheard_warc_scrapper import main
 
 
 if __name__ == "__main__":
@@ -25,4 +26,13 @@ if __name__ == "__main__":
     # text = "This is a terrible piece of work. You have no idea what you are doing, and this whole thing is garbage.”"
     # print(mask_toxic_speech(text))
 
+    # gz_input_file = "data/enwiki-20260501-extracted_urls.txt.gz"
+    # output_file = "data/subsampled_positive_urls.txt"
+    # sample_size = 10_000
+
+    # sampled_urls = reservoir_sample_gz(gz_input_file, k=sample_size, seed=42)
+    # save_samples(sampled_urls, output_file)
+    # print(f"Sampled {len(sampled_urls)} URLs and saved to {output_file}")
+
+    main()
     

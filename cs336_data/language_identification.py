@@ -1,6 +1,7 @@
 import fasttext
 import re
 import random
+
 from fastwarc.warc import ArchiveIterator
 from cs336_data.extract_text import extract_file, normalize_id
 
@@ -9,6 +10,17 @@ def identify_language(text: str):
     model_path = "local-shared-data/classifiers/lid.176.bin"
     model = fasttext.load_model(model_path)
     clean_text = re.sub(r"\s+", " ", text).strip()
+    if not clean_text:
+        return ("", 0.0)
+    labels, probabilities = model.predict(clean_text, k=1)
+    lang_code = labels[0].replace("__label__", "")
+    confidence_score = float(probabilities[0])
+    return (lang_code, confidence_score)
+
+def identify_language(text: str, model) -> tuple[str, float]:
+    clean_text = re.sub(r"\s+", " ", text).strip()
+    if not clean_text:
+        return ("", 0.0)
     labels, probabilities = model.predict(clean_text, k=1)
     lang_code = labels[0].replace("__label__", "")
     confidence_score = float(probabilities[0])
