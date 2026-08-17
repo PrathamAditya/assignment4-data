@@ -11,6 +11,7 @@ from cs336_data.mask_pii import mask_emails, mask_phone_numbers, mask_ipv4
 from cs336_data.harmful_content import nsfw_classifier, toxic_speech_nsfw_classifier
 from cs336_data.gopher_quality_filters import gopher_quality_filter_subset
 from cs336_data.train_classifier import test_model
+from cs336_data.exact_deduplication import exact_line_deduplication
 
 def run_extract_text_from_html_bytes(html_bytes: bytes) -> str | None:
     try:
@@ -55,7 +56,7 @@ def run_gopher_quality_filter(text: str) -> bool:
 def run_exact_line_deduplication(
     input_files: list[os.PathLike], output_directory: os.PathLike
 ):
-    raise NotImplementedError
+    return exact_line_deduplication(input_files, output_directory)
 
 
 def run_minhash_deduplication(
