@@ -9,7 +9,8 @@ from resiliparse.extract.html2text import extract_plain_text
 from cs336_data.language_identification import identify_language
 from cs336_data.mask_pii import mask_emails, mask_phone_numbers, mask_ipv4
 from cs336_data.harmful_content import nsfw_classifier, toxic_speech_nsfw_classifier
-from cs336_data.gopher_quality_filters import gopher_quality_filter
+from cs336_data.gopher_quality_filters import gopher_quality_filter_subset
+from cs336_data.train_classifier import test_model
 
 def run_extract_text_from_html_bytes(html_bytes: bytes) -> str | None:
     try:
@@ -44,11 +45,11 @@ def run_classify_toxic_speech(text: str) -> tuple[Any, float]:
 
 
 def run_classify_quality(text: str) -> tuple[Any, float]:
-    raise NotImplementedError
+    return test_model(text)
 
 
 def run_gopher_quality_filter(text: str) -> bool:
-    return gopher_quality_filter(text)
+    return gopher_quality_filter_subset(text)
 
 
 def run_exact_line_deduplication(

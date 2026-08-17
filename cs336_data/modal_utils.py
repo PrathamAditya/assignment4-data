@@ -13,7 +13,8 @@ if SUNET_ID == "TODO":
 app = modal.App(f"data-{SUNET_ID}")
 data_volume = modal.Volume.from_name(f"data-{SUNET_ID}", create_if_missing=True, version=2)
 shared_data_volume = modal.Volume.from_name(
-    "a4-shared-data", create_if_missing=True, version=2, environment_name="cs336-shared-data"
+    "a4-shared-data", create_if_missing=True, version=2
+    # , environment_name="cs336-shared-data"
 )
 
 
@@ -31,7 +32,7 @@ def build_image(*, include_tests: bool = False) -> modal.Image:
 
 VOLUME_MOUNTS: dict[str | PurePosixPath, modal.Volume | modal.CloudBucketMount] = {
     "/root/data": data_volume,
-    str(MODAL_SHARED_PATH): shared_data_volume.read_only(),
+    # str(MODAL_SHARED_PATH): shared_data_volume.read_only(),
 }
 
 MODAL_SECRETS = []
