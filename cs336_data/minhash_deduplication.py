@@ -32,12 +32,14 @@ def minhash_deduplication(
     out_dir = Path(output_directory)
     out_dir.mkdir(parents=True, exist_ok=True)
     seeds = generate_random_integers(h)
+    signature_per_doc = []
     for path in paths:
         p = Path(path)
         with open(p, "r", encoding="utf-8") as doc:
             counter = 0
             n_grams_sets = set()
             text = doc.read()
+            S = []
 
             # normalization
             nfd_text = unicodedata.normalize("NFD", text)
@@ -59,15 +61,18 @@ def minhash_deduplication(
             # hash function
             hash_functions = create_hash_functions(seeds)
 
-            S = []
-
             for fun in hash_functions:
                 min_val = 0
                 for gram in n_grams_sets:
                     min_val = min(min_val, fun(gram))
                 S.append(min_val)
+            signature_per_doc.append(S)
 
-            results = results = [fn(text) for fn in hash_functions]
+            
+
+            
+            
+
 
 
 
