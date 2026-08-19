@@ -34,5 +34,10 @@ if __name__ == "__main__":
     # save_samples(sampled_urls, output_file)
     # print(f"Sampled {len(sampled_urls)} URLs and saved to {output_file}")
 
-    main()
+    text = "   I love Myself!!   "
+    words = text.strip()
+    for t in words:
+        print(t)
+    # main()
+
     

@@ -12,6 +12,7 @@ from cs336_data.harmful_content import nsfw_classifier, toxic_speech_nsfw_classi
 from cs336_data.gopher_quality_filters import gopher_quality_filter_subset
 from cs336_data.train_classifier import test_model
 from cs336_data.exact_deduplication import exact_line_deduplication
+from cs336_data.minhash_deduplication import minhash_deduplication
 
 def run_extract_text_from_html_bytes(html_bytes: bytes) -> str | None:
     try:
@@ -67,4 +68,4 @@ def run_minhash_deduplication(
     jaccard_threshold: float,
     output_directory: os.PathLike,
 ):
-    raise NotImplementedError
+    return minhash_deduplication(input_files, num_hashes, num_bands, ngrams, jaccard_threshold, output_directory)
